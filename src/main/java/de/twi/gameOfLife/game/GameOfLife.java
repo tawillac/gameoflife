@@ -17,7 +17,7 @@ public class GameOfLife {
 
         //initalGrid.visualize();
         Game game = new Game(initalGrid);
-        game.startGame();
+        game.startGameTask();
 
 
     }

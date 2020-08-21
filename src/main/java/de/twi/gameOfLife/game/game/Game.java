@@ -13,18 +13,20 @@ public class Game {
 
     private Grid grid;
     private Timer timer;
+    private RuleApplicator ruleApplicator;
 
     public Game(Grid grid) {
         this.grid = grid;
         this.timer = new Timer();
+        ruleApplicator = new RuleApplicator(new Overpopulation(), new Underpopulation(), new Survive(), new Reproduction());
     }
 
-    public void startGame() {
+    public void startGameTask() {
         GameTask gameTask = new GameTask();
         timer.schedule(gameTask, 1000, 1000);
     }
 
-    public void stopGame() {
+    public void stopGameTask() {
         timer.cancel();
     }
 
@@ -34,21 +36,28 @@ public class Game {
 
     class GameTask extends TimerTask {
 
-        RuleApplicator ruleApplicator = new RuleApplicator(new Overpopulation(), new Underpopulation(), new Survive(), new Reproduction());
-
         @Override
         public void run() {
             //System.out.println("GameTask executed");
-            Grid nextGenerationGrid = new Grid(grid);
-            for (Cell cell : grid.getAllCells()) {
-                CellState newCellState = ruleApplicator.getCellStateForNextGeneration(cell, grid.getAllNeighboursForCell(cell));
-                nextGenerationGrid.getCellAt(cell.getX(), cell.getY()).setCellState(newCellState);
-            }
-
-            grid = nextGenerationGrid;
-            System.out.println("------------------------");
-            grid.visualize();
+            nextStep();
+            visualize();
 
         }
+
+    }
+
+    private void visualize() {
+        System.out.println("------------------------");
+        grid.visualize();
+    }
+
+    public void nextStep() {
+        Grid nextGenerationGrid = new Grid(grid);
+        for (Cell cell : grid.getAllCells()) {
+            CellState newCellState = ruleApplicator.getCellStateForNextGeneration(cell, grid.getAllNeighboursForCell(cell));
+            nextGenerationGrid.getCellAt(cell.getX(), cell.getY()).setCellState(newCellState);
+        }
+
+        grid = nextGenerationGrid;
     }
 }

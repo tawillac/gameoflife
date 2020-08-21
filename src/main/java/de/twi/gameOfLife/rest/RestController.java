@@ -13,17 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/rest")
 public class RestController {
 
-    @GetMapping("/testget")
-    public Cell[][] getGrid() {
-        Grid initalGrid = new Grid(7,7);
+    Grid initalGrid = new Grid(7,7);
+    {
         initalGrid.getCellAt(1,3).setCellState(CellState.ALIVE);
         initalGrid.getCellAt(2,3).setCellState(CellState.ALIVE);
         initalGrid.getCellAt(3,3).setCellState(CellState.ALIVE);
         initalGrid.getCellAt(3,2).setCellState(CellState.ALIVE);
         initalGrid.getCellAt(2,1).setCellState(CellState.ALIVE);
+    }
+    Game game = new Game(initalGrid);
 
-        //initalGrid.visualize();
-        //Game game = new Game(initalGrid);
-        return initalGrid.getGrid();
+
+    @GetMapping("/testget")
+    public Cell[][] getGrid() {
+        game.nextStep();
+        return game.getGrid().getGrid();
     }
 }
