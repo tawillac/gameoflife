@@ -13,20 +13,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/rest")
 public class RestController {
 
-    Grid initalGrid = new Grid(7,7);
-    {
-        initalGrid.getCellAt(1,3).setCellState(CellState.ALIVE);
-        initalGrid.getCellAt(2,3).setCellState(CellState.ALIVE);
-        initalGrid.getCellAt(3,3).setCellState(CellState.ALIVE);
-        initalGrid.getCellAt(3,2).setCellState(CellState.ALIVE);
-        initalGrid.getCellAt(2,1).setCellState(CellState.ALIVE);
+    Game game = null;
+
+    private Grid getGrid() {
+        Grid initalGrid = new Grid(7, 7);
+        initalGrid.getCellAt(1, 3).setCellState(CellState.ALIVE);
+        initalGrid.getCellAt(2, 3).setCellState(CellState.ALIVE);
+        initalGrid.getCellAt(3, 3).setCellState(CellState.ALIVE);
+        initalGrid.getCellAt(3, 2).setCellState(CellState.ALIVE);
+        initalGrid.getCellAt(2, 1).setCellState(CellState.ALIVE);
+        return initalGrid;
     }
-    Game game = new Game(initalGrid);
 
-
-    @GetMapping("/testget")
-    public Cell[][] getGrid() {
+    @GetMapping("/nextStep")
+    public Cell[][] getNextStepGrid() {
         game.nextStep();
         return game.getGrid().getGrid();
+    }
+
+    @GetMapping("/startGame")
+    public Cell[][] getNewGameGrid() {
+        this.game = new Game(getGrid());
+        return game.getGrid().getGrid();
+    }
+
+    @GetMapping("/isGameRunning")
+    public boolean isGameRunning() {
+        System.err.println("isGameRunning=" + this.game!=null);
+        return this.game != null;
     }
 }
