@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Grid {
 
-    private Cell[][] grid; // Rows, Columns
+    private Cell[][] cellGrid; // Rows, Columns
 
     public Grid(Grid originalGrid) {
-        this.grid = copy(originalGrid.getGrid());
+        this.cellGrid = copy(originalGrid.getCellGrid());
     }
 
     private Cell[][] copy(Cell[][] originalGrid) {
@@ -27,14 +27,14 @@ public class Grid {
     }
 
     public Grid(int x, int y) {
-        this.grid = new Cell[x][y];
+        this.cellGrid = new Cell[x][y];
         init();
     }
 
     private void init() {
-        for (int x = 0; x < grid.length; x++) {
-            for (int y = 0; y < grid[x].length; y++) {
-                grid[x][y] = new Cell(x, y);
+        for (int x = 0; x < cellGrid.length; x++) {
+            for (int y = 0; y < cellGrid[x].length; y++) {
+                cellGrid[x][y] = new Cell(x, y);
             }
         }
     }
@@ -43,30 +43,30 @@ public class Grid {
         // TODO implement as stream!
         for (int y = 0; y < getYLength(); y++) {
             for (int x = 0; x < getXLength(); x++) {
-                System.out.print(grid[x][y] + " ");
+                System.out.print(cellGrid[x][y] + " ");
             }
             System.out.println();
         }
     }
 
     public Cell getCellAt(int x, int y) {
-        return grid[x][y];
+        return cellGrid[x][y];
     }
 
-    public Cell[][] getGrid() {
-        return grid;
+    public Cell[][] getCellGrid() {
+        return cellGrid;
     }
 
     public List<Cell> getAllNeighboursForCell(Cell cell) {
-        return new NeighbourGetter(this, cell).getAllNeighboursForCell(cell);
+        return NeighbourEvaluator.getAllNeighboursForCell(this, cell);
     }
 
     public int getXLength() {
-        return grid.length;
+        return cellGrid.length;
     }
 
     public int getYLength() {
-        return grid[0].length;
+        return cellGrid[0].length;
     }
 
     public List<Cell> getAllCells() {

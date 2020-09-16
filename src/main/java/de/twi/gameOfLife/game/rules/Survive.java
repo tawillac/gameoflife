@@ -12,8 +12,8 @@ public class Survive implements Rule {
     @Override
     public boolean applies(Cell centerCell, List<Cell> neighbours) {
         if (centerCell.getCellState() == CellState.ALIVE) {
-            if (NeighbourEvaluator.getNumberOfCellsWithCertainState(neighbours, CellState.ALIVE) == 2 ||
-                    NeighbourEvaluator.getNumberOfCellsWithCertainState(neighbours, CellState.ALIVE) == 3) {
+            int numberOfAliveCells = NeighbourEvaluator.getNumberOfCellsWithCertainState(neighbours, CellState.ALIVE);
+            if (numberOfAliveCells == 2 || numberOfAliveCells == 3) {
                 return true;
             }
         }

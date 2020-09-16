@@ -4,6 +4,7 @@ package de.twi.gameOfLife.game.game;
 import de.twi.gameOfLife.game.cell.Cell;
 import de.twi.gameOfLife.game.cell.CellState;
 import de.twi.gameOfLife.game.grid.Grid;
+import de.twi.gameOfLife.game.ruleApplication.RuleApplicator;
 import de.twi.gameOfLife.game.rules.*;
 
 import java.util.Timer;
@@ -18,7 +19,7 @@ public class Game {
     public Game(Grid grid) {
         this.grid = grid;
         this.timer = new Timer();
-        ruleApplicator = new RuleApplicator(new Overpopulation(), new Underpopulation(), new Survive(), new Reproduction());
+        this.ruleApplicator = new RuleApplicator(new Overpopulation(), new Underpopulation(), new Survive(), new Reproduction());
     }
 
     public void startGameTask() {
