@@ -1,4 +1,4 @@
-package de.twi.gameOfLife.game;
+package de.twi.gameOfLife.game.old;
 
 
 import de.twi.gameOfLife.game.cell.CellState;
@@ -16,7 +16,7 @@ public class GameOfLife {
         initalGrid.getCellAt(2,1).setCellState(CellState.ALIVE);
 
         //initalGrid.visualize();
-        Game game = new Game(initalGrid);
+        Game_OLD game = new Game_OLD(initalGrid);
         game.startGameTask();
 
 

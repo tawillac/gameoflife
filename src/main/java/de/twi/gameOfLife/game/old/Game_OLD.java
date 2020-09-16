@@ -1,4 +1,4 @@
-package de.twi.gameOfLife.game.game;
+package de.twi.gameOfLife.game.old;
 
 
 import de.twi.gameOfLife.game.cell.Cell;
