@@ -17,10 +17,17 @@ public class RuleApplicator {
 
     public CellState getCellStateForNextGeneration(Cell cell, List<Cell> neighbours) {
         CellState newCellstate = cell.getCellState();
+        boolean alreadyApplied = false;
         for (Rule rule : rules) {
+
             if (rule.applies(cell, neighbours)) {
+                if (alreadyApplied) {
+                    throw new IllegalStateException("More than one rule applied!");
+                }
+
                 System.out.println(cell.visualize() + " " + rule.getClass());
                 newCellstate = rule.getNewCellState();
+                alreadyApplied = true;
             }
         }
         return newCellstate;

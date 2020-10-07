@@ -20,6 +20,11 @@ public class Game {
         this.ruleApplicator = new RuleApplicator(new Overpopulation(), new Underpopulation(), new Survive(), new Reproduction());
     }
 
+    public Game(Grid grid, RuleApplicator ruleApplicator) {
+        this.grid = grid;
+        this.ruleApplicator = ruleApplicator;
+    }
+
     public Grid getGrid() {
         return grid;
     }

@@ -4,6 +4,9 @@ import de.twi.gameOfLife.game.cell.Cell;
 import de.twi.gameOfLife.game.cell.CellState;
 import de.twi.gameOfLife.game.game.Game;
 import de.twi.gameOfLife.game.grid.Grid;
+import de.twi.gameOfLife.game.ruleApplication.RuleApplicator;
+import de.twi.gameOfLife.game.rules.Reproduction;
+import de.twi.gameOfLife.game.rules.Survive;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +37,13 @@ public class RestController {
     @GetMapping("/startGame")
     public Cell[][] getNewGameGrid() {
         this.game = new Game(getGrid());
+        return game.getGrid().getCellGrid();
+    }
+
+    @GetMapping("/startGameWithSpecificRules")
+    public Cell[][] getNewGameGridWithRules() {
+        RuleApplicator ruleApplicator = new RuleApplicator(new Survive(), new Reproduction());
+        this.game = new Game(getGrid(), ruleApplicator);
         return game.getGrid().getCellGrid();
     }
 
