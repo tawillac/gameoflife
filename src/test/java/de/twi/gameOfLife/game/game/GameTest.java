@@ -18,6 +18,17 @@ class GameTest {
     Cell centerCell;
     Rule ruleAppliesAlways;
 
+
+    private Grid getGrid() {
+        Grid initalGrid = new Grid(7, 8);
+        initalGrid.getCellAt(1, 2).setCellState(CellState.ALIVE);
+        initalGrid.getCellAt(2, 3).setCellState(CellState.ALIVE);
+        initalGrid.getCellAt(3, 3).setCellState(CellState.ALIVE);
+        initalGrid.getCellAt(3, 2).setCellState(CellState.ALIVE);
+        initalGrid.getCellAt(3, 1).setCellState(CellState.ALIVE);
+        return initalGrid;
+    }
+
     @BeforeEach
     void setUp() {
         testGrid3x3 = new Grid(3,3);
@@ -39,7 +50,7 @@ class GameTest {
     }
 
     @Test
-    public void nextStep_twoRulesApply_exceptionIsThrown() {
+    public void nextStep_twoRulesApplyAtATime_exceptionIsThrown() {
         RuleApplicator ruleApplicator = new RuleApplicator(new Survive(), new Overpopulation(), new Underpopulation(), new Reproduction(), ruleAppliesAlways);
         Game game = new Game(testGrid3x3, ruleApplicator);
         assertThrows(IllegalStateException.class, () -> game.nextStep());
@@ -52,6 +63,17 @@ class GameTest {
         game.nextStep();
         game.nextStep();
         game.nextStep();
+    }
+
+    @Test
+    public void nextStep_withRealGamePattern_noExceptionIsThrown() {
+        RuleApplicator ruleApplicator = new RuleApplicator(new Survive(), new Overpopulation(), new Underpopulation(), new Reproduction());
+        Game game = new Game(getGrid(), ruleApplicator);
+        int tryCounter = 100;
+        while (tryCounter > 0) {
+            game.nextStep();
+            tryCounter--;
+        }
     }
 
 }
