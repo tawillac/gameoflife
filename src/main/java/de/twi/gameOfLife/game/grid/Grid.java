@@ -78,4 +78,24 @@ public class Grid {
         }
         return cells;
     }
+
+    public boolean equalsGrid(Grid otherGrid) {
+        if (this.getYLength() != otherGrid.getYLength()) {
+            return false;
+        }
+        if (this.getXLength() != otherGrid.getXLength()) {
+            return false;
+        }
+        for (int x = 0; x < this.getXLength(); x++) {
+            for (int y = 0; y < this.getYLength(); y++) {
+                Cell cellInThisGrid = getCellAt(x,y);
+                Cell cellInOtherGrid = otherGrid.getCellAt(x,y);
+                if (cellInThisGrid.getCellState() != cellInOtherGrid.getCellState()) {
+                    System.err.println("Grid.equalsGrid() - Mismatch at (x=" + x + "|y=" + y+")");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

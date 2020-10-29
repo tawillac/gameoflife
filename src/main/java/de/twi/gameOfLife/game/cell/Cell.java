@@ -38,7 +38,7 @@ public class Cell {
     }
 
     public String visualize() {
-        return "(" + x + "|" + y +")";
+        return "(x=" + x + "|y=" + y +")";
     }
 
     @Override
