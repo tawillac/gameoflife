@@ -2,9 +2,11 @@ package de.twi.gameOfLife.rest;
 
 import de.twi.gameOfLife.game.cell.Cell;
 import de.twi.gameOfLife.game.game.Game;
+import de.twi.gameOfLife.game.grid.Grid;
 import de.twi.gameOfLife.game.ruleApplication.RuleApplicator;
 import de.twi.gameOfLife.game.rules.*;
 import de.twi.gameOfLife.game.grid.StartPattern;
+import de.twi.gameOfLife.game.setup.GridCreator;
 import org.apache.tomcat.util.digester.Rules;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,5 +99,11 @@ public class RestController {
     public StartPattern getPattern() {
         System.out.println("getPattern()");
         return startPattern;
+    }
+
+    @GetMapping("/getDefaultGrid")
+    public Cell[][] getDefaultGrid() {
+        System.out.println("getPattern()");
+        return new GridCreator().getGridWithSmile().getCellGrid();
     }
 }
